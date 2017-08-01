@@ -14,40 +14,81 @@ C语言小游戏2：简易飞机游戏。
 int main(void)
 {
     int i, j;
-    int x = 5;
-    int y = 10;
+    int x = 15;
+    int y = 5;
     char input;
 
     int isFire = 0;
     int isKill = 0;
+    int scores = 0;
 
-    int ny = 5;//设立目标
-    int nx = 2;
+    int ny = 1;//设立目标
+    int nx = 1;
+
+    int v_x = 1;
+    int v_y = 1;
+
+    int right = 20;
+    int left = 0;
 
     while(1){
         system("cls");
 
-        if (!isKill){
-            for (i = 0; i < nx; i ++)
-                printf("\n");
-            for (j = 0; j < ny; j ++)
-                printf(" ");
-            printf("+\n");
+        //判断得分
+        if(isKill == 1) {
+                scores += 1;
+                isKill = 0;
+                ny = 1 + (int)(10.0 * rand()/(RAND_MAX + 1.0));//重新生成随机目标
+                nx = 1 + (int)(10.0 * rand()/(RAND_MAX + 1.0));
         }
 
+        if(nx == x + 2){
+            ny = 1 + (int)(10.0 * rand()/(RAND_MAX + 1.0));//重新生成随机目标
+            nx = 1 + (int)(10.0 * rand()/(RAND_MAX + 1.0));
+        }
+
+        printf("得分：%d",scores);
+
+        ny = ny + v_y;
+        nx = nx + v_x;
+
+        //显示目标
+        for (i = 0; i < nx; i ++)
+            printf("\n");
+        for (j = 0; j < ny; j ++)
+            printf(" ");
+        printf("+\n");
+
+        if (nx == left || nx == right)
+            v_y = -v_y;
+
         if(isFire == 0){
-            for (i = 0; i < x; i ++)
+            for (i = 0; i < (x-nx); i ++)
                 printf("\n");
         }
         else {
-            for (i = 0; i < x; i ++){
-                for (j = 0; j < y; j ++)
+            for (i = 0; i < (x-nx); i++){
+                for (j = 0; j < y; j++)
                     printf(" ");
                 printf("  |\n");
             }
             isFire = 0;
-            if (y + 2 == ny)
+            if (ny == y + 2){
+                printf("\a");
                 isKill = 1;
+            }
+
+        }
+
+        //判断游戏失败
+        if(nx == x && ny == y + 2){
+            printf("游戏结束\a");
+            exit(0);
+        }
+        if (nx == x + 1 && ny >= y && ny <= y + 4){
+            printf("游戏结束\a");
+            exit(0);
+
         }
 
         //飞机的形态
@@ -76,8 +117,6 @@ int main(void)
             if (input == ' ')
                 isFire = 1;
         //}
-
     }
-
     return 0;
 }
