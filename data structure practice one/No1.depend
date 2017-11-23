@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1510628693 source:e:\课程\数据结构\作业\no1\main.cpp
+	<stdio.h>
+	<stdlib.h>
+	"list.h"
+	"list.cpp"
+
+1509538414 e:\课程\数据结构\作业\no1\list.h
+
+1509802934 e:\课程\数据结构\作业\no1\list.cpp
+	<stdio.h>
+	<malloc.h>
+	<stdlib.h>
+	"list.h"
+
